@@ -1,0 +1,32 @@
+Challenge: dbName
+Atish Kadam
+
+
+VULNERABILITY
+
+The login form's password field was vulnerable to Blind SQL Injection. User
+input was directly inserted into the SQL query, and the difference in response
+between a successful and failed login acted as a yes/no oracle. The app also
+silently truncated passwords over 50 characters, so payloads had to be kept
+short to avoid being chopped mid-query.
+
+
+APPROACH / SOLUTION
+
+The database name was extracted one character at a time using this payload in
+the password field:
+  ' OR mid(database(),{position},1)='{character}'#
+
+If the character matched, login succeeded — confirming that character. The
+script looped through each position and tried every printable character until
+a match was found, building the full database name character by character.
+
+
+MITIGATION / FIX
+
+1. Parameterized queries — treat user input as data, never as SQL.
+2. Sanitize inputs — reject special characters like quotes and hashes.
+3. Normalize responses — make all login failures identical in size and timing
+   to remove the true/false oracle.
+4. Rate limiting — slow down repeated login attempts to make extraction
+   impractical.

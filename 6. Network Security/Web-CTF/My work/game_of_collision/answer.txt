@@ -1,0 +1,45 @@
+Challenge: game_of_collision
+Atish Kadam
+
+VULNERABILITY
+
+The application compared two MD5-hashed inputs using PHP's loose comparison
+operator (==) without verifying that the inputs were actually strings. This
+opened up two bypasses:
+
+1. Array bypass — PHP's md5() returns NULL when given an array. So if both
+   inputs are arrays, the comparison becomes NULL == NULL which is TRUE.
+
+2. Magic hash bypass — PHP treats strings starting with '0e' followed by
+   digits as scientific notation (zero). So two different strings with '0e'
+   hashes are considered equal because 0 == 0.
+
+
+APPROACH / SOLUTION
+
+Method 1 — Array bypass (what worked):
+  arg1[] = a
+  arg2[] = b
+
+Sending both arguments as arrays causes md5() to return NULL for each.
+The comparison NULL == NULL evaluates to TRUE and the server returns the flag.
+
+Method 2 — Magic hash bypass (also attempted):
+  arg1 = 0e215962017
+  arg2 = 0e807097110
+
+Both strings have MD5 hashes starting with '0e', so PHP's loose comparison
+treats them as scientifically equal (0 == 0), even though the actual values
+are different.
+
+
+MITIGATION / FIX
+
+1. Use strict comparison (===) instead of (==) — this enforces both type and
+   value matching, defeating both bypasses entirely.
+
+2. Validate input types — use is_string() before calling md5() and reject
+   anything that isn't a plain string.
+
+3. Use hash_equals() for comparing hashes — it is type-safe and also
+   constant-time, preventing timing attacks.

@@ -1,0 +1,57 @@
+Challenge: Agent LFI
+Atish Kadam
+
+
+VULNERABILITY
+
+The site had a Local File Inclusion (LFI) vulnerability in the ?p= parameter.
+Whatever was passed to it was directly used to include files on the server,
+with no checks or sanitization. This meant an attacker could use path traversal
+or PHP filter wrappers to read any file on the server.
+
+On top of that, the download endpoint (?p=download&dir=N&file=...) leaked
+information by returning HTTP 500 for valid directories and 404 for invalid
+ones — making it easy to figure out which user directories actually existed.
+
+
+APPROACH / SOLUTION
+
+Step 1 - Login via SQL injection:
+Used SQL injection on the login form to get into my account, the same way as
+the previous challenge.
+
+Step 2 - Finding valid directories:
+Scanned directories 0 to 120 using:
+  ?p=download&dir=N&file=avatar1.png
+
+Any directory that returned HTTP 500 was a real directory. This acted as an
+oracle to map out which paths existed on the server.
+
+Step 3 - Hunting the hidden file:
+Tried a list of common filenames (wallet.php, flag.txt, secret.php, etc.)
+across all the valid directories found in Step 2. A HTTP 500 response again
+indicated the file existed.
+
+Step 4 - Reading the file using LFI:
+Used the php://filter wrapper to base64-encode and leak the contents of the
+hidden file:
+  ?p=php://filter/convert.base64-encode/resource=INC/UPLOAD/THUMBS/<dir>/<file>
+
+Decoded the base64 output and extracted the flag from the PHP source.
+
+
+MITIGATION / FIX
+
+1. Whitelist allowed values for the ?p= parameter instead of passing user
+   input directly into include(). Only let known, safe page names through.
+
+2. Don't leak directory existence through different HTTP status codes — always
+   return the same response (e.g. 404) whether a path exists or not.
+
+3. Use basename() and realpath() to block path traversal attempts.
+
+4. Disable allow_url_include and allow_url_fopen in php.ini to prevent
+   wrapper-based attacks like php://filter.
+
+5. Store sensitive files outside the web root so they can't be reached even
+   if LFI is exploited.

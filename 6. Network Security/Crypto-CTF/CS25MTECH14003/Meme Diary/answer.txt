@@ -1,0 +1,7 @@
+strings flag.png | grep "v1:"  and  strings flag.png | grep "csKy"  I used this commands to decypt image and get b64_key and b64_iv and b64_ct.
+The key, IV, and ciphertext were identified from recognizable text patterns.
+The v1 format revealed the structure of the encrypted components.
+All values were Base64-decoded to recover the raw byte data.
+AES-CBC decryption with padding removal revealed the flag.
+
+ 

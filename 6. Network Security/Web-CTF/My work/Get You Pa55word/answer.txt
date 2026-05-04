@@ -1,0 +1,35 @@
+Challenge: Get Your Password
+Atish Kadam
+
+VULNERABILITY
+
+The password field was injected directly into the SQL query. The server's
+response size acted as a yes/no signal — shorter meant the condition was TRUE.
+This made it possible to extract another user's stored password hash one
+character at a time, just from the login form. Since MD5 hashes were stored
+as passwords, extracting the hash was both the attack and the flag.
+
+
+APPROACH / SOLUTION
+
+Step 1 — Find the user's row ID (shorter than injecting a full email):
+  ' OR id=13 && email LIKE '%11008%'#
+
+Step 2 — Confirm password length:
+  ' OR id=13 && LENGTH(password)=32#
+
+Step 3 — Extract each character using ORD() for case-sensitivity:
+  ' OR id=13 && ORD(MID(password,1,1))=97#
+
+MySQL's = comparison is case-insensitive, so MID()='a' would also match 'A'.
+ORD() returns the raw ASCII value, making a (97) and A (65) distinct.
+Charset tested: 0–9, a–f, A–F. Flag: cs6903{<extracted_hash>}
+
+
+MITIGATION / FIX
+
+Prepared statements fix the injection entirely — user input should never be
+embedded as raw SQL text. Passwords should be hashed with bcrypt or Argon2
+instead of MD5, which is unsalted and broken. Normalizing login response sizes
+removes the signal the attack depends on, and rate limiting raises the cost of
+the 700+ requests needed for full hash extraction.

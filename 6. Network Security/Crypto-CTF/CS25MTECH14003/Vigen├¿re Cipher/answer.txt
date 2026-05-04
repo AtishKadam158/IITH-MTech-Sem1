@@ -1,0 +1,5 @@
+Challenge - Decrypting Ciphertext using Classic Vigenère cipher Given Key - "VIGENERE"
+Since both ciphertext and key were known, I performed standard Vigenère decryption.
+Each letter of the ciphertext was shifted backward using the repeating key.
+After reversing the substitutions, the original plaintext was obtained.
+I have attached python scipt which used for this questions 

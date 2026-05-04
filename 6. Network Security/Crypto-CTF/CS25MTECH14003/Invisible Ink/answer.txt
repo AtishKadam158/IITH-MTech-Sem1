@@ -1,0 +1,5 @@
+I have written a script which loads Flag.enc file -> parse it -> looking for hidden data encoded in spaces & tabs.
+For each line, spaces ==>  0 and tabs ==>  1, building a binary string from invisible characters.
+Lines with more than 4 binary digits are kept, while shorter ones are ignored as noise or separators.
+Each valid binary string is converted to a decimal number and then turned into its matching ASCII character.
+All the characters are joined together at the end to reveal the hidden flag concealed in the whitespace.

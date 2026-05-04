@@ -1,0 +1,5 @@
+Converted  Hexadecimal ciphertext ->  Raw Bytes 
+Iterated through known DES weak keys 
+Decrypted the ciphertext using DES in ECB mode for each weak key
+Removed PKCS-style padding to validate whether decryption was correct
+Printed the readable plaintext (or raw bytes) when a valid key produced proper padding

@@ -1,0 +1,11 @@
+Under the Information Technology Act, 2000, the maximum penalties for the specified offences are as follows:
+
+Hacking with a computer system:
+1)Imprisonment: Up to 3 years.
+2)Fine: Up to ₹5 lakh (or both).
+Note: While the original Act (Section 66) explicitly used the term "hacking," the 2008 Amendment replaced it with "computer-related offences" covering acts done dishonestly or fraudulently.
+
+Securing access or attempting to secure access to a protected system:
+1)Imprisonment: Up to 10 years.
+2)Fine: Individuals are also liable to a fine (the Act does not specify a fixed upper limit for the fine under this specific section).
+Note: This falls under Section 70, which deals with systems declared by the government to be "protected" (e.g., critical national infrastructure).

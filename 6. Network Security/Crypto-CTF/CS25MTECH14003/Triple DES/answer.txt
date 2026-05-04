@@ -1,0 +1,5 @@
+The ciphertext was retrieved and the scheme identified as Triple DES with two 5-digit keys
+Due to the small keyspace, all possible keys were generated with parity bits normalized
+A lookup table was built by encrypting the known prefix with candidate k1 values
+A meet-in-the-middle attack matched intermediate states to recover both keys
+Using the recovered keys, the ciphertext was fully decrypted to obtain the flag

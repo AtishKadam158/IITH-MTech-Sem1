@@ -1,0 +1,54 @@
+User Datagram Protocol - UDP
+User Datagram Protocol (UDP) is a Transport Layer protocol of the Internet Protocol (IP) that provides fast, connectionless, and lightweight communication between processes. It does not guarantee delivery, order, or error checking, making it suitable for real-time and time-sensitive applications such as video streaming, DNS, and VoIP.
+
+UDP
+
+UDP Header
+UDP header is 8 bytes long, followed by the data payload. It contains all the essential information needed for transmission. Each port number field is 16 bits, giving a range from 0 to 65535, where port 0 is reserved. Port numbers are used to identify and separate different user requests or processes.
+
+UDP-header
+UDP Header
+Field	Size	Description
+Source Port	16 bits	Identifies the sender’s port number.
+Destination Port	16 bits	Identifies the receiver’s port number.
+Length	16 bits	Specifies the total length of UDP header and data.
+Checksum	16 bits	Used for error detection (optional in IPv4, mandatory in IPv6).
+Notes: Unlike TCP, checksum in UDP is optional, it provides no error or flow control, relying on IP/ICMP for error reporting, while port numbers help differentiate user requests.
+
+Applications of UDP
+UDP is preferred where low latency is crucial and occasional packet loss is acceptable:
+
+DNS uses UDP for fast query/response lookups since domain name queries are small and need quick replies.
+DHCP uses UDP to dynamically assign IP addresses to devices, where small control messages are exchanged.
+VoIP uses UDP for real-time voice communication, as it tolerates some packet loss but not delays.
+RIP uses UDP to send periodic routing updates between routers efficiently.
+NTP uses UDP to synchronize system clocks across networks with minimal overhead.
+UDP Pseudo Header
+To improve checksum accuracy, UDP uses a pseudo header (not transmitted) during checksum calculation.
+
+UDP-pseudo-header
+UDP pseudo header
+Includes parts of the IP header (source and destination IP, protocol number, and UDP length).
+Ensures the packet is delivered to the correct host and protocol port.
+At the receiver, UDP verifies the checksum using the pseudo header, if it's valid, the packet is accepted.
+Use of UDP in DDoS Attacks
+A UDP flood attack is a type of Distributed Denial of Service (DDoS) attack where an attacker sends a large number of User Datagram Protocol (UDP) packets to a target port exploiting UDP’s connectionless nature.
+
+Attack Process:
+
+The attacker sends massive UDP packets with spoofed IP addresses to random ports on the target.
+The target checks for active applications at those ports (usually none).
+It responds with ICMP "Destination Unreachable" messages, overloading its own resources.
+Mitigation:
+
+Monitor for abnormal UDP traffic spikes.
+Use rate limiting, firewalls, and intrusion prevention systems (IPS).
+Deploy DDoS protection services for large-scale attacks.
+How UDP Interacts with IP
+UDP operates on top of the Internet Protocol (IP) to enable communication between applications. Here’s how data transmission takes place:
+
+The application provides the data along with destination details to UDP.
+UDP attaches its header, which includes the source port, destination port, length, and checksum.
+The UDP datagram is passed to the IP layer for addressing and routing.
+IP adds its own header and forwards the packet to the destination host.
+At the receiver’s end, UDP removes its header and delivers the data to the target application.

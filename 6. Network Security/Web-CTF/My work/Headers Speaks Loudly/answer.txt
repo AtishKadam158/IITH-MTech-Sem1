@@ -1,0 +1,40 @@
+Challenge: Headers Speak Loudly
+Atish Kadam
+
+
+VULNERABILITY
+
+The application used client-controlled HTTP headers for all access control
+decisions — a cookie value, User-Agent, Referer, DNT, and X-UIDH. Since every
+one of these is set by the client, any user can simply forge them. There was no
+server-side enforcement at all — just checking that the right values were
+present, which anyone can fake.
+
+
+APPROACH / SOLUTION
+
+After logging in via SQL injection, the following headers and cookie were set
+manually before hitting the protected endpoint:
+
+  Cookie:     admin=1          → bypasses the admin check
+  User-Agent: CS6903           → passes the browser check
+  Referer:    newslab.cse.iith.ac.in  → passes the origin check
+  DNT:        1                → passes the privacy check
+  X-UIDH:     surya            → passes the supercookie check
+
+Once all checks passed, the flag was returned in the response headers.
+
+
+MITIGATION / FIX
+
+1. Never use client-supplied headers for access control — cookies, User-Agent,
+   Referer, and custom headers can all be trivially forged by anyone.
+
+2. Use server-side session authentication — admin access should be tied to a
+   verified server-side session, not a cookie the client sets themselves.
+
+3. For origin checking, use proper server-side CORS policies rather than
+   trusting the Referer header.
+
+4. X-UIDH is a real-world ISP supercookie used for tracking — it should never
+   be used for authentication under any circumstances.

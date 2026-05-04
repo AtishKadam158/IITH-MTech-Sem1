@@ -1,0 +1,5 @@
+The provided data was recognized as a binary-encoded string.  (Given, Binary string)
+Converting binary to ASCII revealed an encoded text sequence.  (Binary -> ASCII)
+The output was decoded through successive base32, hex, and base64 layers.
+Each decoding step reversed a transformation applied during encoding.
+A solve.py script was used to automate the decoding process.

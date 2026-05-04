@@ -1,0 +1,126 @@
+---- This is Sample file for use ---------
+
+What is Network Security?
+Network security protects networks and the data they carry from unauthorized access, misuse, and cyberattacks. It ensures systems remain confidential, available, and trustworthy across all digital environments.
+
+Prevents unauthorized access and cyber threats
+Protects data integrity, confidentiality, and availability
+Uses layered security controls across devices, users, and systems
+Ensures safe communication and reliable network operations
+Network Security
+Network Security
+How Does Network Security Work?
+Network security works through multiple protective layers that control access at both the network edge and inside the environment. Each layer ensures only authorized users can access resources while blocking threats.The core idea is to protect large amounts of data using layered defenses that enforce rules before any action is allowed.These layers include:
+
+how_does_network_security_work_
+1. Physical Network Security
+Physical security prevents unauthorized individuals from physically accessing network hardware, servers, or devices.
+
+Uses access cards, biometrics, CCTV, and locked server rooms
+Protects routers, switches, cables, and data centers
+Prevents tampering, device theft, and hardware-level attacks
+2. Technical Network Security
+Technical security protects data as it is stored, processed, and transmitted across the network using software-based controls.
+
+Secures data in motion and at rest
+Blocks unauthorized access and malicious activities
+Includes firewalls, encryption, antivirus, and intrusion detection
+3. Administrative Network Security
+Administrative security defines policies, user permissions, and procedures that control how the network is accessed and managed.
+
+Manages authentication, authorization, and user roles
+Enforces security policies and access controls
+Ensures proper configuration, monitoring, and compliance
+Types of Network Security
+Below are the major types of network security controls that protect networks from breaches, unauthorized access, and cyber threats.
+
+1. Email Security
+Email security protects email accounts from phishing, malware, fraud, data theft, and unauthorized access.
+
+Filters spam, malicious links, and phishing emails
+Blocks risky attachments and outbound data leaks
+Protects one of the most commonly exploited attack vectors
+2. Network Segmentation
+Network segmentation divides a network into isolated segments to reduce attack spread and enforce security policies.
+
+Separates sensitive systems from general access
+Limits lateral movement during attacks
+Access granted based on identity, role, and device
+3. Access Control (NAC)
+Access control ensures only authorized users and compliant devices can connect to the network.
+
+Identifies devices before granting access
+Restricts or blocks non-compliant endpoints
+Enforces authentication and authorization policies
+4. Sandboxing
+Sandboxing runs files or code in an isolated environment to detect malicious behavior safely.
+
+Prevents malware from reaching the network
+Simulates real OS behavior for analysis
+Identifies zero-day and unknown threats
+5. Cloud Network Security
+Cloud security protects cloud workloads, applications, and stored data from unauthorized access and breaches.
+
+Addresses visibility and control gaps in SaaS
+Secures dynamic cloud workloads and multi-cloud setups
+Prevents misuse of cloud resources
+6. Web Security
+Web security protects users, browsers, and websites from malicious sites, downloads, and online threats.
+
+Blocks harmful URLs and web-based attacks
+Secures web gateways on-prem and in the cloud
+Protects organizational websites from vulnerabilities
+7. Intrusion Prevention System (IPS / IDPS)
+IPS monitors network traffic to detect, prevent, and block malicious activity in real time.
+
+Identifies suspicious behavior and attacks
+Automatically blocks harmful traffic
+Generates logs and reports for analysis
+8. Antivirus & Anti-Malware
+Antivirus solutions detect, block, and remove malware such as viruses, Trojans, ransomware, and worms.
+
+Protects endpoints and servers
+Scans for known and emerging threats
+Repairs infected systems and prevents reinfection
+9. Firewall Security
+Firewalls filter network traffic based on rules to block unauthorized access while allowing legitimate communication.
+
+Acts as a barrier between trusted and untrusted networks
+Controls inbound and outbound traffic
+Prevents intrusions and unauthorized connections
+Firewall
+10. Application Security
+Application security protects software and apps from vulnerabilities and exploitation during development and usage.
+
+Includes secure coding, testing, and patching
+Protects sensitive data handled by applications
+Blocks common attacks such as injection or XSS
+11. Wireless Security
+Wireless security safeguards Wi-Fi networks from unauthorized access and wireless-specific attacks.
+
+Prevents rogue access points and Wi-Fi cracking
+Uses protocols like WPA3
+Protects communication beyond physical boundaries
+12. Mobile Device Security
+Mobile security protects smartphones, tablets, and BYOD devices from threats and unauthorized access.
+
+Controls which devices can connect to the network
+Enforces encryption and secure connection policies
+Monitors mobile traffic for suspicious activity
+13. Industrial Network Security (ICS/OT Security)
+Industrial network security protects operational technology systems like SCADA, PLCs, and critical infrastructure.
+
+Segments OT networks from IT networks
+Monitors device behavior and anomalies
+Prevents attacks on manufacturing and industrial systems
+14. VPN Security
+A VPN encrypts the connection between users and networks, ensuring secure remote access.
+
+Protects communication over the internet
+Uses IPsec or SSL for encryption
+Ensures privacy and confidentiality for remote workers
+Benefits of Network Security
+Protects Sensitive Data: Safeguards client and organizational information from cyber threats, ensuring secure and reliable access.
+Prevents Financial Loss: Reduces the risk of major financial damage resulting from data breaches, ransomware, or downtime.
+Preserves Reputation: Helps maintain customer trust by protecting confidential data and preventing public security incidents.
+Enhances Operational Stability: Ensures smooth and uninterrupted business operations by stopping cyberattacks and unauthorized access before they cause disruption.

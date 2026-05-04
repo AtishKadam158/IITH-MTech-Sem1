@@ -1,0 +1,5 @@
+Made a script which used for analyzing conceptually by identifying Diffie–Hellman key exchange and layered transformations
+The shared secret key was recomputed using the public parameters
+Cipher values were reversed by undoing the multiplicative encoding step
+The XOR-based obfuscation was removed using the repeating key
+Reversing the final string revealed the original flag

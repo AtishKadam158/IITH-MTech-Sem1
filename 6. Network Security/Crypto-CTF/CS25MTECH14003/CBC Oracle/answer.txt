@@ -1,0 +1,5 @@
+We connected to the server -> submitted the student ID -> obtained the AES-CBC ciphertext -> divided into 16-byte blocks.
+For each block, modified versions of the previous ciphertext block were sent as oracle queries.
+VALID responses -> used to detect correct padding and recover intermediate bytes via brute force.
+Query usage ->  optimized by prioritizing likely flag characters to remain within the limit.
+The recovered intermediate values were XORed with the original blocks to obtain the plaintext and final flag.

@@ -1,0 +1,5 @@
+We have secret.docx.enc and we have find secret.enc file where plain text is there and we dont have key (but we have how file got encryoted)
+Made a solve.py ->  encryption script was analyzed to understand how the key was generated.
+A weakness was identified in the key generation mechanism, making it predictable.
+By reproducing the same logic, the original encryption key was recovered.
+The captured ciphertext was decrypted using the reconstructed key.

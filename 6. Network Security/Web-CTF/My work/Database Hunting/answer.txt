@@ -1,0 +1,39 @@
+Challenge: Database Hunting
+Atish Kadam
+
+
+VULNERABILITY
+
+The Search by Name feature passed the name parameter directly into a SQL query
+with no sanitization. It had a basic keyword filter blocking union, select,
+where, and information_schema — but the filter only ran once. By doubling the
+keywords (e.g. ununionion, seselectlect), after the filter stripped the inner
+match, the remaining characters rejoined to form the original word. This made
+the WAF trivially bypassable.
+
+APPROACH / SOLUTION
+
+After logging in normally, the following payload was injected into the Search
+by Name field using the keyword-doubling bypass:
+
+  ' ununionion seselectlect null,table_name,null,...,null
+    from infoorrmation_schema.tables
+    whwhereere table_schema=database()#
+
+The search results displayed table names as if they were user profiles. A
+suspicious table named ft342156 stood out. Querying it directly:
+
+  ' ununionion seselectlect null,name,null,...,null from ft342156#
+
+The flag appeared as a profile name in the results:
+  cs6903{..............}
+
+
+MITIGATION / FIX
+
+Prepared statements are the real fix — when input is passed as a parameter,
+it can never be interpreted as SQL regardless of what it contains. The current
+WAF is single-pass and trivially bypassed; a filter should never be the primary
+defense. The database user should also be restricted from accessing
+information_schema, and search results should never reflect raw query output
+outside of their intended scope.

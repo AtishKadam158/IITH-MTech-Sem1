@@ -1,0 +1,6 @@
+The encryption logic was analyzed and identified as repeating-key XOR
+A known flag prefix was used to recover part of the key via XOR reversal
+The remaining key byte was brute-forced by testing all possibilities
+Candidate plaintexts were validated using the expected flag format
+This successfully revealed the original flag
+

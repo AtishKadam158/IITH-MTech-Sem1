@@ -1,0 +1,5 @@
+TThe Diffie-Hellman exchange was vulnerable to a small subgroup attack.
+By sending B = 1, the shared secret becomes 1 irrespective of the private key.
+The AES key was derived from SHA256(shared_secret), which is predictable.
+Using shared = 1, I recomputed the AES key and decrypted the ciphertext.
+A solve.py script was used to perform key derivation and AES decryption.

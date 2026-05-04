@@ -1,0 +1,5 @@
+Given, Morse code consisting of dots and dashes
+Decoding Morse produced a numeric sequence rather than readable text
+The numbers were grouped ->  fixed-length three-digit blocks
+Each block was interpreted ->  Unicode/ASCII value
+Converting these values->  original plaintext flag

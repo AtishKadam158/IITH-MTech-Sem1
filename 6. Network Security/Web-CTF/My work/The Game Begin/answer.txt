@@ -1,0 +1,52 @@
+Challenge: The Game Begin
+Atish Kadam (CS25MTECH14003)
+
+VULNERABILITY
+
+The login page had a SQL injection vulnerability. Basically, whatever you typed
+into the email and password fields was being passed directly into the database
+query without any checks. This means an attacker can type in crafted text
+instead of a real password and trick the system into logging them in anyway.
+
+
+APPROACH / SOLUTION
+
+Since signup was disabled, the login form was the only way in, so that's where
+I started.
+
+Step 1 - Confirming the vulnerability:
+I used my email as usual but typed this as the password:
+  %' or '0'='0
+
+It worked — I got logged in without a real password. The catch was that it
+logged me into someone else's account (whichever user came first in the
+database). But this confirmed that SQL injection was definitely possible here.
+
+Step 2 - Getting into my own account:
+I tweaked the payload to target my specific account. I typed this into the
+email field:
+  ' OR email='CS25MTECH14003@iith.ac.in' '
+
+This told the database to find the account with my email, completely skipping
+the password check. It worked, and I was logged into my own profile.
+
+Step 3 - Finding the flag:
+Once I was in my profile, the flag was sitting right there in the bio section.
+
+
+MITIGATION / FIX
+
+The root cause is that the app trusts whatever the user types and plugs it
+straight into a database query. Here's how to fix that:
+
+1. Use prepared statements — instead of building the query by joining strings
+   together, use placeholders so the database always treats user input as plain
+   text, never as part of the query itself.
+
+2. Validate inputs — check that the email looks like a real email and the
+   password doesn't contain suspicious characters before even touching the
+   database.
+
+3. Don't show database errors to users — if something goes wrong, show a
+   generic "login failed" message. Detailed error messages can give attackers
+   clues about how the database is structured.

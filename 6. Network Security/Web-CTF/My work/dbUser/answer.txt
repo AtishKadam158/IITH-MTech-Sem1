@@ -1,0 +1,41 @@
+Challenge: dbUser
+Atish Kadam
+
+
+VULNERABILITY
+
+The login form's password field was vulnerable to Blind SQL Injection. User
+input was directly concatenated into the SQL query without sanitization, and
+the difference in response between a successful and failed login acted as a
+yes/no oracle. MySQL's USER() function — which returns the current database
+user — was reachable through the injection point, leaking internal credentials
+that should never be externally accessible. The app also silently truncated
+passwords over 50 characters, so payloads had to be kept short.
+
+
+APPROACH / SOLUTION
+
+Same approach as dbName, but instead of DATABASE(), the USER() function was
+used to extract the database username character by character.
+
+Payload injected into the password field:
+  ' OR mid(user(),{position},1)='{character}'#
+
+If the character at that position matched, login succeeded — confirming it.
+The script looped through each position (1 to 40) and tried every printable
+character until a match was found, building the full database username one
+character at a time. When no character matched at a position, extraction
+stopped.
+
+
+MITIGATION / FIX
+
+1. Parameterized queries — treat user input as data, never as SQL.
+2. Sanitize inputs — reject special characters like quotes and hashes.
+3. Restrict DB user permissions — the MySQL user the app runs as should have
+   minimum privileges; exposing USER() metadata through injection is a sign
+   of over-privileged database access.
+4. Normalize responses — make all login failures identical in size and timing
+   to eliminate the true/false oracle.
+5. Rate limiting — slow down repeated login attempts to make character-by-
+   character extraction impractical.
