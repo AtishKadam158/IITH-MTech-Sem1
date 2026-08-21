@@ -6,5 +6,5 @@
 4. Advanced Data Structure and Algorithms (6/10)
 5. Visual Computing (9/10)
 6. Network Security (7/10)
-7. Fraud ()
-8. Deep Learning
+7. Fraud (9/10)
+8. Deep Learning(8/10)
